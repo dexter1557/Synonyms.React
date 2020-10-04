@@ -11,7 +11,7 @@ const Form = ({ onSubmitClick }) => {
     e.preventDefault();
     try {
       if (isValid()) {
-        sendData({
+        await sendData({
           ...formData,
           synonyms: formData.synonyms.replace(/ /g, ""),
         });
@@ -24,6 +24,7 @@ const Form = ({ onSubmitClick }) => {
   };
 
   const sendData = (data) => axios({ method: "POST", url: saveItem, data });
+
   const isValid = () => {
     if (!formData.term.length && !formData.synonyms.length) {
       setErrors({ term: true, synonyms: true });

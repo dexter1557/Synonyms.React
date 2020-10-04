@@ -10,25 +10,26 @@ const Main = () => {
   const getItems = async () => {
     try {
       const res = await Axios({ method: "get", url: getItem });
-      const { data } = await res;
+      const { data } = res;
       return data;
     } catch (e) {
       console.error("Something went wrong!", e);
       return false;
     }
   };
-  const updateSynonyms = async () => {
-    const data = await getItems();
-    if (data) {
-      setSynonyms(data);
-    }
-  };
-  useEffect(() => {
-    updateSynonyms();
-  }, [synonyms]);
 
-  const onSubmit = () => {
-    getItems();
+  useEffect(() => {
+    const update = async () => {
+      const data = await getItems();
+      setSynonyms(data);
+    };
+
+    update();
+  }, []);
+
+  const onSubmit = async () => {
+    const data = await getItems();
+    setSynonyms(data);
   };
 
   return (
